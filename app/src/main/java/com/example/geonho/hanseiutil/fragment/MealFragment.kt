@@ -1,103 +1,95 @@
 package com.example.geonho.hanseiutil.fragment
 
-import android.content.Context
-import android.net.Uri
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.Toast
 
 import com.example.geonho.hanseiutil.R
+import com.example.geonho.hanseiutil.network.MealService
+import com.example.geonho.hanseiutil.network.meal
+import kotlinx.android.synthetic.main.fragment_meal.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [MealFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [MealFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
+@Suppress("DEPRECATION")
 class MealFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    lateinit var fragmentView:View
+
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance() = MealFragment()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meal, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        fragmentView =  inflater.inflate(R.layout.fragment_meal, container, false)
+        check()
+        return fragmentView
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
+    private fun check(){
+        if(true){
+            setMeal()
+            Log.d("asdf","asdasd")
+        }else{
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
+    private fun setMeal(){
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
+        val dialog:ProgressDialog = ProgressDialog.show(context,"받아오는 중","데이터를 받는 중입니다",true,false)
+        dialog.show()
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MealFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MealFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        val retrofit:Retrofit = Retrofit.Builder().baseUrl("http://api.hansei.us/").addConverterFactory(GsonConverterFactory.create()).build()
+        val mealService:MealService = retrofit.create(MealService::class.java)
+        val call : Call<meal> = mealService.meal()
+
+        call.enqueue(object:Callback<meal>{
+            override fun onFailure(call: Call<meal>, t: Throwable) {
+                Log.d("onFail",t.message)
+                dialog.cancel()
+                Toast.makeText(context,"급식 정보를 받아오지 못했습니다",Toast.LENGTH_LONG).show()
             }
+
+            override fun onResponse(call: Call<meal>, response: Response<meal>) {
+               if(response.body() != null){
+                   dialog.cancel()
+                    fragmentView.date.text = response.body()!!.date
+                    fragmentView.day.text = "(${response.body()!!.day})"
+                    var menuResponse:String = response.body()!!.menu
+                    menuResponse = menuResponse.replace(".", "\n")
+                   Log.d("menuResponse",menuResponse)
+                    fragmentView.menu.text = menuResponse
+
+
+               }else{
+                   dialog.cancel()
+                   Log.d("onRes",response.toString())
+                   Toast.makeText(context,"문제가 발생했습니다",Toast.LENGTH_LONG).show()
+               }
+            }
+        })
+        }
+
+
     }
-}
+
+
+
+
+
