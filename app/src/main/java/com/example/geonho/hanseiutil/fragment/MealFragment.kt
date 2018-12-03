@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.geonho.hanseiutil.fragment
 
 import android.app.ProgressDialog
@@ -85,6 +87,7 @@ class MealFragment : Fragment() {
 
                   SharedPreferenceUtil.saveList(context!!,"meal",mealList)
                   Log.d("saveList",SharedPreferenceUtil.getList(context!!,"meal").toString())
+
 
                }else{
                    dialog.cancel()
