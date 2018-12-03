@@ -7,12 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 
 import com.example.geonho.hanseiutil.R
 import com.example.geonho.hanseiutil.network.MealService
 import com.example.geonho.hanseiutil.network.meal
+import com.example.geonho.hanseiutil.util.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.fragment_meal.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MealFragment : Fragment() {
 
     lateinit var fragmentView:View
-
+    var mealList :MutableList<String> = ArrayList()
 
     companion object {
 
@@ -42,11 +42,13 @@ class MealFragment : Fragment() {
     }
 
     private fun check(){
-        if(true){
+        if(SharedPreferenceUtil.getList(context!!,"meal").isEmpty()){
             setMeal()
-            Log.d("asdf","asdasd")
+            Log.d("급식","다시 파싱")
         }else{
-
+            fragmentView.date.text = SharedPreferenceUtil.getList(context!!,"meal")[0]
+            fragmentView.day.text = SharedPreferenceUtil.getList(context!!,"meal")[1]
+            fragmentView.menu.text = SharedPreferenceUtil.getList(context!!,"meal")[2]
         }
     }
 
@@ -76,6 +78,13 @@ class MealFragment : Fragment() {
                    Log.d("menuResponse",menuResponse)
                     fragmentView.menu.text = menuResponse
 
+                   mealList.add(0, response.body()!!.date)
+                   mealList.add(1,response.body()!!.day)
+                   mealList.add(2,menuResponse)
+                   Log.d("Mutable",mealList.toString())
+
+                  SharedPreferenceUtil.saveList(context!!,"meal",mealList)
+                  Log.d("saveList",SharedPreferenceUtil.getList(context!!,"meal").toString())
 
                }else{
                    dialog.cancel()

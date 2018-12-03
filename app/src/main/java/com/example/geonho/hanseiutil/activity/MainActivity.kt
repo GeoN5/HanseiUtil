@@ -10,6 +10,7 @@ import com.example.geonho.hanseiutil.R
 import com.example.geonho.hanseiutil.fragment.MealFragment
 import com.example.geonho.hanseiutil.fragment.SettingFragment
 import com.example.geonho.hanseiutil.fragment.TimeTableFragment
+import com.example.geonho.hanseiutil.util.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(toolBar)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
         init()
     }
 
@@ -53,10 +56,16 @@ class MainActivity : AppCompatActivity() {
         val tempTime = System.currentTimeMillis()
         val intervalTime = tempTime - backPressedTime
         if (intervalTime in 0..FINSH_INTERVAL_TIME) {
+            SharedPreferenceUtil.removePreferences(this,"meal")
             ActivityCompat.finishAffinity(this)
         } else {
             backPressedTime = tempTime
             Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        SharedPreferenceUtil.removePreferences(this,"meal")
     }
 }
