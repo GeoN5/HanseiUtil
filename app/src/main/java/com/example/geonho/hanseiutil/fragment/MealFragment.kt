@@ -2,6 +2,7 @@
 
 package com.example.geonho.hanseiutil.fragment
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -27,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MealFragment : Fragment() {
 
     lateinit var fragmentView:View
-    var mealList :MutableList<String> = ArrayList()
+    lateinit var mealPreference :String
 
     companion object {
 
@@ -43,14 +44,17 @@ class MealFragment : Fragment() {
         return fragmentView
     }
 
+    @SuppressLint("SetTextI18n")
     private fun check(){
-        if(SharedPreferenceUtil.getList(context!!,"meal").isEmpty()){
+        if(SharedPreferenceUtil.getData(context!!,"meal") == "default"){
             setMeal()
             Log.d("급식","다시 파싱")
         }else{
-            fragmentView.date.text = SharedPreferenceUtil.getList(context!!,"meal")[0]
-            fragmentView.day.text = SharedPreferenceUtil.getList(context!!,"meal")[1]
-            fragmentView.menu.text = SharedPreferenceUtil.getList(context!!,"meal")[2]
+            val getMeal = SharedPreferenceUtil.getData(context!!,"meal").split(",")
+            Log.d("getPreference",getMeal.toString())
+            fragmentView.date.text = getMeal[0]
+            fragmentView.day.text = "(${getMeal[1]})"
+            fragmentView.menu.text = getMeal[2]
         }
     }
 
@@ -70,6 +74,7 @@ class MealFragment : Fragment() {
                 Toast.makeText(context,"급식 정보를 받아오지 못했습니다",Toast.LENGTH_LONG).show()
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<meal>, response: Response<meal>) {
                if(response.body() != null){
                    dialog.cancel()
@@ -80,14 +85,11 @@ class MealFragment : Fragment() {
                    Log.d("menuResponse",menuResponse)
                     fragmentView.menu.text = menuResponse
 
-                   mealList.add(0, response.body()!!.date)
-                   mealList.add(1,response.body()!!.day)
-                   mealList.add(2,menuResponse)
-                   Log.d("Mutable",mealList.toString())
+                   mealPreference = "${response.body()!!.date},${response.body()!!.day},$menuResponse"
+                   Log.d("Preference",mealPreference)
 
-                  SharedPreferenceUtil.saveList(context!!,"meal",mealList)
-                  Log.d("saveList",SharedPreferenceUtil.getList(context!!,"meal").toString())
-
+                  SharedPreferenceUtil.saveData(context!!,"meal",mealPreference)
+                  Log.d("savePreference", SharedPreferenceUtil.getData(context!!,"meal"))
 
                }else{
                    dialog.cancel()
@@ -100,8 +102,3 @@ class MealFragment : Fragment() {
 
 
     }
-
-
-
-
-

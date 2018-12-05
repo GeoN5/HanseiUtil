@@ -18,9 +18,9 @@ object SharedPreferenceUtil {
         return sharedPreferences.getStringSet(key, mutableSetOf()).toList()
     }
 
-    fun getData(context : Context, key : String) : String? {
+    fun getData(context : Context, key : String) : String {
         val sharedPreferences : SharedPreferences = context.getSharedPreferences("test",Context.MODE_PRIVATE)
-        return sharedPreferences.getString(key, null)
+        return sharedPreferences.getString(key, "default")
     }
 
     fun saveData(context: Context, key : String, value : String) {

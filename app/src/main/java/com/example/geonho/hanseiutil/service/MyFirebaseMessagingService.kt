@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
+import android.util.Log
 import com.example.geonho.hanseiutil.R
 import com.example.geonho.hanseiutil.activity.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -14,6 +15,7 @@ import com.google.firebase.messaging.RemoteMessage
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+        Log.d("result",remoteMessage.toString())
         if (remoteMessage!!.notification != null) {
             sendNotification(remoteMessage.data["title"]!!, remoteMessage.data["message"]!!)
         }
