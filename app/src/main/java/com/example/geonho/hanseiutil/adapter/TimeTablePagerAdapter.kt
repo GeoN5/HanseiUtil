@@ -8,18 +8,18 @@ import com.example.geonho.hanseiutil.fragment.TimeTableH2Fragment
 
 class TimeTablePagerAdapter(fm: FragmentManager?, val tabCount:Int) : FragmentStatePagerAdapter(fm) {
 
-    val fragment = TimeTableH1Fragment()
-    val fragment1 = TimeTableH2Fragment()
+//    val fragment = TimeTableH1Fragment()
+//    val fragment1 = TimeTableH2Fragment()
 
     override fun getItem(position: Int): Fragment? {
 
         // Returning the current tabs
         return when (position) {
             0 -> {
-                fragment
+                TimeTableH1Fragment.newInstance()
             }
             1 -> {
-                fragment1
+                TimeTableH2Fragment.newInstance()
             }
             else -> null
         }
