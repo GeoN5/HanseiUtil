@@ -17,7 +17,6 @@ class TimeTableFragment : Fragment() {
     lateinit var fragmentView:View
 
     companion object {
-
         @JvmStatic
         fun newInstance() = TimeTableFragment()
     }
@@ -40,7 +39,6 @@ class TimeTableFragment : Fragment() {
         fragmentView.viewPager.adapter = pagerAdapter
         fragmentView.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(fragmentView.tab))
 
-        // Set TabSelectedListener
         fragmentView.tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
 

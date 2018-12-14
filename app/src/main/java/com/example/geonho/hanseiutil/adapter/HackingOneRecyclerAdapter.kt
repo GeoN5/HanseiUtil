@@ -34,6 +34,7 @@ class  HackingOneRecyclerAdapter(val items : MutableList<String>, val context: C
 
         count++
     }
+
 }
 
 class OneViewHolder(itemView : View): RecyclerView.ViewHolder(itemView)

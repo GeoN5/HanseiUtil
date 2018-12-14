@@ -14,20 +14,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:gravity="center"
                 android:textColor="#7986cb"
-                android:text="time"/>
+                android:text="@string/time"/>
 
         <TextView
                 android:id="@+id/subject"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="subject"
+                android:text="@string/subject"
                 android:textColor="#49599a"
                 android:gravity="center"
-                android:textSize="30dp"/>
+                android:textSize="30sp"/>
 
     </LinearLayout>
 

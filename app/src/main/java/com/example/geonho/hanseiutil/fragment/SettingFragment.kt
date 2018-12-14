@@ -14,7 +14,6 @@ class SettingFragment : Fragment() {
     lateinit var fragmentView:View
 
     companion object {
-
         @JvmStatic
         fun newInstance() = SettingFragment()
     }
@@ -24,7 +23,5 @@ class SettingFragment : Fragment() {
         fragmentView =  inflater.inflate(R.layout.fragment_setting, container, false)
         return fragmentView
     }
-
-
 
 }

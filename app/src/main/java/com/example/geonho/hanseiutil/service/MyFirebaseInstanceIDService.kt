@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "OverridingDeprecatedMember")
 
 package com.example.geonho.hanseiutil.service
 

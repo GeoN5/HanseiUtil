@@ -14,7 +14,7 @@ import android.widget.Toast
 
 import com.example.geonho.hanseiutil.R
 import com.example.geonho.hanseiutil.network.MealService
-import com.example.geonho.hanseiutil.network.meal
+import com.example.geonho.hanseiutil.network.Meal
 import com.example.geonho.hanseiutil.util.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.fragment_meal.view.*
 import retrofit2.Call
@@ -31,7 +31,6 @@ class MealFragment : Fragment() {
     lateinit var mealPreference :String
 
     companion object {
-
         @JvmStatic
         fun newInstance() = MealFragment()
     }
@@ -46,11 +45,11 @@ class MealFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun check(){
-        if(SharedPreferenceUtil.getData(context!!,"meal") == "default"){
+        if(SharedPreferenceUtil.getData(context!!,"Meal") == "default"){
             setMeal()
             Log.d("급식","다시 파싱")
         }else{
-            val getMeal = SharedPreferenceUtil.getData(context!!,"meal").split(",")
+            val getMeal = SharedPreferenceUtil.getData(context!!,"Meal").split(",")
             Log.d("getPreference",getMeal.toString())
             fragmentView.date.text = getMeal[0]
             fragmentView.day.text = "(${getMeal[1]})"
@@ -59,23 +58,22 @@ class MealFragment : Fragment() {
     }
 
     private fun setMeal(){
-
         val dialog:ProgressDialog = ProgressDialog.show(context,"받아오는 중","데이터를 받는 중입니다",true,false)
         dialog.show()
 
         val retrofit:Retrofit = Retrofit.Builder().baseUrl("http://api.hansei.us/").addConverterFactory(GsonConverterFactory.create()).build()
         val mealService:MealService = retrofit.create(MealService::class.java)
-        val call : Call<meal> = mealService.meal()
+        val call : Call<Meal> = mealService.meal()
 
-        call.enqueue(object:Callback<meal>{
-            override fun onFailure(call: Call<meal>, t: Throwable) {
+        call.enqueue(object:Callback<Meal>{
+            override fun onFailure(call: Call<Meal>, t: Throwable) {
                 Log.d("onFail",t.message)
                 dialog.cancel()
                 Toast.makeText(context,"급식 정보를 받아오지 못했습니다",Toast.LENGTH_LONG).show()
             }
 
             @SuppressLint("SetTextI18n")
-            override fun onResponse(call: Call<meal>, response: Response<meal>) {
+            override fun onResponse(call: Call<Meal>, response: Response<Meal>) {
                if(response.body() != null){
                    dialog.cancel()
                     fragmentView.date.text = response.body()!!.date
@@ -88,8 +86,8 @@ class MealFragment : Fragment() {
                    mealPreference = "${response.body()!!.date},${response.body()!!.day},$menuResponse"
                    Log.d("Preference",mealPreference)
 
-                  SharedPreferenceUtil.saveData(context!!,"meal",mealPreference)
-                  Log.d("savePreference", SharedPreferenceUtil.getData(context!!,"meal"))
+                  SharedPreferenceUtil.saveData(context!!,"Meal",mealPreference)
+                  Log.d("savePreference", SharedPreferenceUtil.getData(context!!,"Meal"))
 
                }else{
                    dialog.cancel()
@@ -99,6 +97,5 @@ class MealFragment : Fragment() {
             }
         })
         }
-
 
     }

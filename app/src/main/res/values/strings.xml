@@ -3,4 +3,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">한세 알리미</string>
+    <string name="time">time</string>
+    <string name="subject">subject</string>
+    <string name="meal">급식</string>
+    <string name="timeTable">시간표</string>
+    <string name="setting">설정</string>
 </resources>

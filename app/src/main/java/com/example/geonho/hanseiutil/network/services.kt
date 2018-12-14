@@ -9,7 +9,7 @@ import retrofit2.http.POST
 
 interface MealService{
     @GET("http://api.hansei.us/")
-    fun meal(): Call<meal>
+    fun meal(): Call<Meal>
 }
 
 interface FirebaseService{

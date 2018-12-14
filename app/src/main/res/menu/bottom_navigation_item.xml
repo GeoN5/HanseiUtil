@@ -5,21 +5,21 @@
     <item
             android:id="@+id/action_meal"
             android:enabled="true"
-            android:title="급식"
+            android:title="@string/meal"
             android:icon="@drawable/meal"
             app:showAsAction="ifRoom"/>
 
     <item
             android:id="@+id/action_timeTable"
             android:enabled="true"
-            android:title="시간표"
+            android:title="@string/timeTable"
             android:icon="@drawable/timetable"
             app:showAsAction="ifRoom"/>
 
     <item
             android:id="@+id/action_setting"
             android:enabled="true"
-            android:title="설정"
+            android:title="@string/setting"
             android:icon="@drawable/setting"
             app:showAsAction="ifRoom"/>
 

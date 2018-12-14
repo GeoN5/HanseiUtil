@@ -33,6 +33,7 @@ class  HackingTwoRecyclerAdapter(val items :MutableList<String>, val context: Co
 
         count++
     }
+
 }
 
 class TwoViewHolder(itemView : View): RecyclerView.ViewHolder(itemView)

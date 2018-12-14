@@ -25,4 +25,5 @@ class TimeTablePagerAdapter(fm: FragmentManager?, private val tabCount:Int) : Fr
     override fun getCount(): Int {
         return tabCount
     }
+
 }

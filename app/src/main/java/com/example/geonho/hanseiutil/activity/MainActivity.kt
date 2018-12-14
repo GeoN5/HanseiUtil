@@ -25,7 +25,7 @@ import retrofit2.Response
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
-    private val FINSH_INTERVAL_TIME = 2000
+    private val finishTime = 2000
     private var backPressedTime:Long = 0
     lateinit var fragment : Fragment
 
@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val tempTime = System.currentTimeMillis()
         val intervalTime = tempTime - backPressedTime
-        if (intervalTime in 0..FINSH_INTERVAL_TIME) {
-            SharedPreferenceUtil.removePreferences(this,"meal")
+        if (intervalTime in 0..finishTime) {
+            SharedPreferenceUtil.removePreferences(this,"Meal")
             ActivityCompat.finishAffinity(this)
         } else {
             backPressedTime = tempTime
@@ -98,6 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        SharedPreferenceUtil.removePreferences(this,"meal")
+        SharedPreferenceUtil.removePreferences(this,"Meal")
     }
+
 }
