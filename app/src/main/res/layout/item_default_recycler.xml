@@ -2,7 +2,7 @@
 <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
+            android:layout_height="61dp"
             android:orientation="vertical">
 
     <LinearLayout android:layout_width="match_parent"
@@ -16,6 +16,7 @@
                 android:layout_weight="1"
                 android:textSize="30dp"
                 android:gravity="center"
+                android:textColor="#7986cb"
                 android:text="time"/>
 
         <TextView
@@ -24,14 +25,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:text="subject"
+                android:textColor="#49599a"
                 android:gravity="center"
                 android:textSize="30dp"/>
 
     </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+            <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
 
 </LinearLayout>
