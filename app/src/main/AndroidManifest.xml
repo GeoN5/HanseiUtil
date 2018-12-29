@@ -23,7 +23,7 @@
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
-                android:resource="@color/colorAccent" />
+                android:resource="@drawable/ic_launcher_background" />
 
         <activity android:name=".activity.MainActivity"
                   android:screenOrientation="portrait"
@@ -32,6 +32,10 @@
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 

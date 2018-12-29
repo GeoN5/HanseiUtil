@@ -6,10 +6,11 @@
              tools:context=".fragment.MealFragment">
 
     <RelativeLayout
-            android:background="@drawable/meal_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="40dp">
+            <!--android:background="@drawable/meal_background"-->
+
 
     <TextView
             android:id="@+id/date"

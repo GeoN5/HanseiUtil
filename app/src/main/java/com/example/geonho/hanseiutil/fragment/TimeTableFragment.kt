@@ -3,6 +3,7 @@ package com.example.geonho.hanseiutil.fragment
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import com.example.geonho.hanseiutil.R
 import com.example.geonho.hanseiutil.adapter.TimeTablePagerAdapter
 import kotlinx.android.synthetic.main.fragment_time_table.view.*
+import java.util.*
 
 
 class TimeTableFragment : Fragment() {
@@ -26,6 +28,7 @@ class TimeTableFragment : Fragment() {
         fragmentView =  inflater.inflate(R.layout.fragment_time_table, container, false)
         setTablayout()
         setViewpager()
+        weekCheck()
         return fragmentView
     }
 
@@ -54,6 +57,19 @@ class TimeTableFragment : Fragment() {
 
         })
 
+    }
+
+    private fun weekCheck() {
+        val day = Calendar.getInstance()!!.get(Calendar.DAY_OF_WEEK)
+        if (day > 6) {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context!!)
+                .setTitle("Today").setMessage("오늘은 주말입니다.").setPositiveButton("확인")
+                { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val dialog = builder.create()
+            dialog.show()
+        }
     }
 
 }

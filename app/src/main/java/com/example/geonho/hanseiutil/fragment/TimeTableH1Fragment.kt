@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
 import com.example.geonho.hanseiutil.R
 import com.example.geonho.hanseiutil.adapter.HackingOneRecyclerAdapter
@@ -61,9 +60,6 @@ class TimeTableH1Fragment : Fragment() {
             6 -> {
                 oneList.addAll(one.One.fri)
                 Log.d("one_fri",oneList.toString())
-            }
-            else -> {
-                Toast.makeText(context,"오늘은 주말입니다!",Toast.LENGTH_LONG).show()
             }
         }
 
