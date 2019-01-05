@@ -26,4 +26,16 @@ object SharedPreferenceUtil {
         editor.remove(key)
         editor.apply()
     }
+
+    fun saveSwitch(context: Context,key: String,value:Boolean){
+        val sharedPreferences : SharedPreferences = context.getSharedPreferences("test", Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putBoolean(key, value)
+        editor.apply()
+    }
+
+    fun getSwitch(context : Context, key : String) : Boolean {
+        val sharedPreferences : SharedPreferences = context.getSharedPreferences("test",Context.MODE_PRIVATE)
+        return sharedPreferences.getBoolean(key,true)
+    }
 }

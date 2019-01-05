@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.widget.Toast
 import com.example.geonho.hanseiutil.R
 import com.example.geonho.hanseiutil.fragment.MealFragment
@@ -48,7 +49,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolBar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         init()
-        fcmSet()
+        Log.d("qwer",SharedPreferenceUtil.getSwitch(applicationContext,"switch").toString())
+        if(SharedPreferenceUtil.getSwitch(applicationContext,"switch")){
+            Toast.makeText(applicationContext,"FCM OK!!",Toast.LENGTH_LONG).show()
+            fcmSet()
+        }
     }
 
     private fun init(){

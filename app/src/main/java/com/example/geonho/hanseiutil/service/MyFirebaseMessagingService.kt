@@ -17,7 +17,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Log.d("result",remoteMessage.toString())
         if (remoteMessage!!.notification != null) {
-            sendNotification(remoteMessage.data["title"]!!, remoteMessage.data["message"]!!)
+            sendNotification(remoteMessage.data["meal"]!!, remoteMessage.data["time"]!!)
         }
     }
 

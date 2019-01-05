@@ -61,7 +61,7 @@ class TimeTableFragment : Fragment() {
 
     private fun weekCheck() {
         val day = Calendar.getInstance()!!.get(Calendar.DAY_OF_WEEK)
-        if (day > 6) {
+        if (day == 7 || day == 1) {
             val builder: AlertDialog.Builder = AlertDialog.Builder(context!!)
                 .setTitle("Today").setMessage("오늘은 주말입니다.").setPositiveButton("확인")
                 { dialog, _ ->
